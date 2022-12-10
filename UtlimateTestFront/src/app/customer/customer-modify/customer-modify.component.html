@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center mt-5">
+        <ng-container *ngIf="!isUpdate;else templateName">Create New</ng-container>
+        <ng-template #templateName>
+          Update
+        </ng-template>
+        Customer
+      </h1>
+    </div>
+    <div class="col-md-12">
+      <div style="width: 80%; margin: 20px auto">
+        <form [formGroup]="customerForm" (ngSubmit)="ModifyCustomer()">
+          <div class="d-flex">
+            <input type="hidden" formControlName="id" class="form-control" />
+
+            <div class="form-group mr-2">
+              <label>Name</label>
+              <input type="text" formControlName="name" class="form-control" />
+            </div>
+            <div class="form-group mr-2">
+              <label>Code</label>
+              <input type="text" formControlName="code" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>mobile</label>
+              <input type="text" formControlName="mobile" class="form-control" />
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label>description</label>
+            <textarea type="text" formControlName="description" class="form-control"></textarea>
+          </div>
+          <button (click)="addAddress()" type="button" class="btn btn-primary ">
+            Add Address
+          </button>
+          <div formArrayName="addresses" class="my-5">
+            <div *ngFor="let address of AddressesArray.controls; let i = index" class="my-4">
+              <div [formGroupName]="i">
+                <div class="d-flex align-stretch">
+                  <div class="form-group mr-2 ">
+                    <label>city</label>
+                    <input type="text" formControlName="city" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label>zone</label>
+                    <input type="text" formControlName="zone" class="form-control" />
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <div class="form-group mr-2" style="flex-grow:3">
+                    <label>street</label>
+                    <input type="text" formControlName="street" class="form-control" />
+                  </div>
+                  <div class="form-group mr-2" style="flex-grow:1">
+                    <label>building</label>
+                    <input type="number" formControlName="building" class="form-control" />
+                  </div>
+                  <div class="form-group" style="flex-grow:1">
+                    <label>floor</label>
+                    <input type="number" formControlName="floor" class="form-control" />
+                  </div>
+                </div>
+                <button (click)="removeAddress(i)" class="btn btn-danger btn-block">
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="mt-2 mb-3 btn btn-success btn-block" [disabled]="!customerForm.valid">
+            <ng-container *ngIf="!isUpdate;else templateName">Add </ng-container>
+            <ng-template #templateName>
+              Update
+            </ng-template> Customer
+          </button>
+        </form>
+        <a (click)="navigateBack()" class="btn btn-info btn-block">Go Back</a>
+      </div>
+    </div>
+  </div>
+</div>
